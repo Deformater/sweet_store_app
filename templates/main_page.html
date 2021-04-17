@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Список курьеров:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Тип курьера</th>
+            <th>Регионы работы</th>
+            <th>Время работы</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data[0] %}
+        <tr>
+            <td><a href="/post_couriers">{{i.courier_id}}</a></td>
+            <td><a href="/post_couriers">{{i.courier_type}}</a></td>
+            <td><a href="/post_couriers">{{i.regions}}</a></td>
+            <td><a href="/post_couriers">{{' '.join(i.working_hours)}}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/post_couriers" class="btn btn-primary">Добавить курьера</a>
+<h2>Список заказов:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Вес</th>
+            <th>Регион доставки</th>
+            <th>Время доставки</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data[1] %}
+        <tr>
+            <td><a href="#zatemnenie">{{i.order_id}}</a></td>
+            <td><a href="#zatemnenie">{{i.weight}}</a></td>
+            <td><a href="#zatemnenie">{{i.region}}</a></td>
+            <td><a href="#zatemnenie">{{' '.join(i.delivery_hours)}}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/post_orders" class="btn btn-primary">Добавить заказ</a>
+<div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h1>akgfgjdf</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
