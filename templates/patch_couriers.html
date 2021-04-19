@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Данные курьера:</h1>
+    <p>id: {{data['courier_id']}}</p>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.type.label }} (нынешнее значение: {{data['courier_type']}})<br>
+            {{ form.type(class="form-control") }}<br>
+            {% for error in form.type.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.regions.label }} нынешнее значение: {{data['regions']}})<br>
+            {{ form.regions(class="form-control") }}<br>
+            {% for error in form.regions.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.working_hours.label }} нынешнее значение: {{' '.join(data['working_hours'])}})<br>
+            {{ form.working_hours(class="form-control") }}<br>
+            {% for error in form.working_hours.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        {% if 'rating' in data.keys() %}
+            <p>Рейтинг: {{data['rating']}}</p>
+        {% endif %}
+        {% if 'earnings' in data.keys() %}
+            <p>Заработок: {{data['earnings']}}</p>
+        {% endif %}
+        <p>{{ form.submit(type="submit", class="btn btn-success") }}
+            <a href="/" class="btn btn-primary">Назначить заказы</a></p>
+        {{message}}
+    </form>
+{% endblock %}

@@ -21,3 +21,12 @@ class PostOrdersForm(FlaskForm):
     delivery_hours = StringField('Время Доставки', validators=[DataRequired(),
                                                                working_hours_validation])
     submit = SubmitField('Добавить')
+
+
+class PatchCouriersForm(FlaskForm):
+    type = StringField('Тип курьера', validators=[DataRequired(), AnyOf(('foot', 'bike', 'car'))])
+    regions = StringField('Регионы работы(вводить через пробел,',
+                          validators=[DataRequired(), region_validation])
+    working_hours = StringField('Времена работы(вводить через пробел,', validators=[DataRequired(),
+                                                                                    working_hours_validation])
+    submit = SubmitField('Изменить')

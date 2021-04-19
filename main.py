@@ -1,10 +1,11 @@
 from flask import Flask
 from data import db_session, couriers_api
 from flask import render_template, redirect
-from forms.forms import PostCouriersForm, PostOrdersForm
+from forms.forms import PostCouriersForm, PostOrdersForm, PatchCouriersForm
 from data.couriers import Couriers
 from data.orders import Orders
 from requests import get, post, patch
+from json import loads
 
 
 app = Flask(__name__)
@@ -64,17 +65,39 @@ def post_orders():
                      "region": region,
                      "delivery_hours": delivery_hours
                  }]
-             }).text)
+              }).text)
 
         return redirect('/')
     return render_template('post_orders.html', title='Добавление заказа', form=form)
 
 
+@app.route('/patch_couriers/<int:courier_id>', methods=['GET', 'POST'])
+def couriers(courier_id):
+    form = PatchCouriersForm()
+    response = get('http://localhost:8080/couriers/' + str(courier_id))
+    if response.status_code == 400:
+        return render_template('patch_couriers.html', title='Изменение данных курьера',
+                               message='Не удалось получить данные курьера', form=form)
+    if form.validate_on_submit():
+        type = form.type.data
+        regions = list(map(int, form.regions.data.split()))
+        working_hours = form.working_hours.data.split()
+        patch('http://localhost:8080/couriers/' + str(courier_id),
+              json={
+                  "courier_type": type,
+                  "regions": regions,
+                  "working_hours": working_hours
+              })
+        return redirect('/')
+    return render_template('patch_couriers.html', title='Изменение данных курьера',
+                           data=loads(response.text.split('\n')[1]), form=form)
+
+
 @app.route('/', methods=['GET'])
 def main_pages():
     db_sess = db_session.create_session()  # Создание ссесии с БД
-    return render_template('main_page.html', title='fd', data=[db_sess.query(Couriers).all(),
-                                                               db_sess.query(Orders).all()])
+    return render_template('main_page.html', title='Главная страница', data=[db_sess.query(Couriers).all(),
+                                                                             db_sess.query(Orders).all()])
 
 
 def main():
