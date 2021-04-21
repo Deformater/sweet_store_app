@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Данные заказа</h1>
+    <p>id: {{data['order_id']}}</p>
+    <p>Вес: {{data['weight']}}</p>
+    <p>Регион доставки: {{data['region']}}</p>
+    <p>Время доставки: {{" ".join(data['delivery_hours'])}}</p>
+    {% if data['is_available'] %}
+        <p>Свободен</p>
+    {% else %}
+        <p>Время назначения: {{data['assign_time']}}</p>
+        {% if 'courier_id' in data.keys() %}
+            <p>id курьера: {{data['courier_id']}}</p>
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+            </form>
+        {% else %}
+            <p>Время окончания: {{data['complete_time']}}</p>
+            <p>id курьера: {{data['complete_by_id']}}</p>
+        {% endif %}
+    {% endif %}
+    {{message}}
+{% endblock %}

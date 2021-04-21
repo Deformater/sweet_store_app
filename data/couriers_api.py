@@ -311,3 +311,56 @@ def get_couriers(courier_id):
     except ValueError:
 
         return make_response('HTTP 400 Bad Request', 400)   # Неудачный ответ
+
+
+@blueprint.route('/orders/<int:order_id>', methods=['GET'])
+def get_orders(order_id):
+    try:
+        db_sess = db_session.create_session()  # Создание ссесии с БД
+
+        order = db_sess.query(Orders).get(order_id)  # Получение заказа из БД
+
+        # Проверка наличия заказа с заданным id
+        if order is None:
+            raise ValueError
+
+        if order.is_available:
+
+            return make_response('HTTP 200 OK\n' + json.dumps({
+                "order_id": order.order_id,
+                "weight": order.weight,
+                "region": order.region,
+                "delivery_hours": order.delivery_hours,
+                "is_available": order.is_available
+            }))
+
+        else:
+
+            if order.courier:
+
+                return make_response('HTTP 200 OK\n' + json.dumps({
+                    "order_id": order.order_id,
+                    "weight": order.weight,
+                    "region": order.region,
+                    "delivery_hours": order.delivery_hours,
+                    "is_available": order.is_available,
+                    "assign_time": order.assign_time,
+                    "courier_id": order.courier_id
+                }))
+
+            else:
+
+                return make_response('HTTP 200 OK\n' + json.dumps({
+                    "order_id": order.order_id,
+                    "weight": order.weight,
+                    "region": order.region,
+                    "delivery_hours": order.delivery_hours,
+                    "is_available": order.is_available,
+                    "assign_time": order.assign_time,
+                    "complete_time": order.complete_time,
+                    "complete_by_id": order.complete_by_id
+                }))
+
+    except ValueError:
+
+        return make_response('HTTP 400 Bad Request', 400)   # Неудачный ответ

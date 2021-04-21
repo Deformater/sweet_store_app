@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Данные курьера:</h1>
+    <h1>Данные курьера</h1>
     <p>id: {{data['courier_id']}}</p>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
@@ -39,7 +39,8 @@
             <p>Заработок: {{data['earnings']}}</p>
         {% endif %}
         <p>{{ form.submit(type="submit", class="btn btn-success") }}
-            <a href="/" class="btn btn-primary">Назначить заказы</a></p>
+            if not courier.orders_ids
+            {{ assign_form.submit(type="submit", class="btn btn-primary") }}
         {{message}}
     </form>
 {% endblock %}

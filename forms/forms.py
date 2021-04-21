@@ -30,3 +30,11 @@ class PatchCouriersForm(FlaskForm):
     working_hours = StringField('Времена работы(вводить через пробел,', validators=[DataRequired(),
                                                                                     working_hours_validation])
     submit = SubmitField('Изменить')
+
+
+class AssignForm(FlaskForm):
+    submit = SubmitField('Назначить заказы')
+
+
+class CompleteForm(FlaskForm):
+    submit = SubmitField('Завершить заказ')

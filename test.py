@@ -194,7 +194,7 @@ def post_complete():
     print(post('http://localhost:8080/orders/complete',
                json={
                         "courier_id": 5,
-                        "order_id": 19,
+                        "order_id": 2,
                         "complete_time": datetime.datetime.now().isoformat()[:-4] + 'Z'
                     }).text)
     print(post('http://localhost:8080/orders/complete',
@@ -227,7 +227,7 @@ post_complete()
 
 print('----------------------------------------------------------')
 
-# Проверка валидации данных get запроса
+# Проверка валидации данных get запроса курьера
 print('----------------------------------------------------------')
 
 
@@ -238,6 +238,21 @@ def get_courier():
 
 
 get_courier()
+
+
+print('----------------------------------------------------------')
+
+# Проверка валидации данных get запроса заказа
+print('----------------------------------------------------------')
+
+
+def get_orders():
+    print(get('http://localhost:8080/orders/5').text)
+    print(get('http://localhost:8080/orders/18').text)
+    print(get('http://localhost:8080/orders/1').text)
+
+
+get_orders()
 
 
 print('----------------------------------------------------------')

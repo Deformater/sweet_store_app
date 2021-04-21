@@ -36,10 +36,10 @@
     <tbody>
         {% for order in data[1] %}
         <tr>
-            <td><a href="#zatemnenie">{{order.order_id}}</a></td>
-            <td><a href="#zatemnenie">{{order.weight}}</a></td>
-            <td><a href="#zatemnenie">{{order.region}}</a></td>
-            <td><a href="#zatemnenie">{{' '.join(order.delivery_hours)}}</a></td>
+            <td><a href="/get_orders/{{order.order_id}}">{{order.order_id}}</a></td>
+            <td><a href="/get_orders/{{order.order_id}}">{{order.weight}}</a></td>
+            <td><a href="/get_orders/{{order.order_id}}">{{order.region}}</a></td>
+            <td><a href="/get_orders/{{order.order_id}}">{{' '.join(order.delivery_hours)}}</a></td>
         </tr>
         {% endfor %}
     </tbody>
