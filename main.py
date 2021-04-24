@@ -100,6 +100,9 @@ def couriers(courier_id):
     # GET запрос н получение данных курьера
     response = get('http://localhost:8080/couriers/' + str(courier_id))
 
+    db_sess = db_session.create_session()   # Создание ссесии с БД
+    courier = db_sess.query(Couriers).get(loads(response.text.split('\n')[1])['courier_id'])
+
     # Проверка успешности ответа
     if response.status_code == 400:
         # Рендер страницы с сообщением об ошибке
@@ -136,7 +139,8 @@ def couriers(courier_id):
 
     # Успешный рендер страницы
     return render_template('patch_couriers.html', title='Изменение данных курьера',
-                           data=loads(response.text.split('\n')[1]), form=form, assign_form=assign_form)
+                           data=loads(response.text.split('\n')[1]), form=form, assign_form=assign_form,
+                           courier=courier)
 
 
 @app.route('/get_orders/<int:order_id>', methods=['GET', 'POST'])

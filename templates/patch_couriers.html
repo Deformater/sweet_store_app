@@ -32,6 +32,9 @@
         </div>
         {% endfor %}
         </p>
+        {% if courier.orders %}
+            <p>Назначенные заказы: {{courier.orders_ids}}</p>
+        {% endif %}
         {% if 'rating' in data.keys() %}
             <p>Рейтинг: {{data['rating']}}</p>
         {% endif %}
@@ -39,8 +42,10 @@
             <p>Заработок: {{data['earnings']}}</p>
         {% endif %}
         <p>{{ form.submit(type="submit", class="btn btn-success") }}
-            if not courier.orders_ids
-            {{ assign_form.submit(type="submit", class="btn btn-primary") }}
+            {% if not courier.orders %}
+                {{ assign_form.submit(type="submit", class="btn btn-primary") }}
+            {% endif %}
+        </p>
         {{message}}
     </form>
 {% endblock %}
