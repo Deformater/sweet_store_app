@@ -95,25 +95,33 @@ def complete_orders_validation(request, order, complete_time):
                                '%Y-%m-%dT%H:%M:%S.%fZ')
 
 
-# Проверка данных формы
+# Проверка данных id
 def type_is_integer(form, field):
     try:
         int(field.data)
+
     except ValueError:
+        # Сообщение об ошибке
         raise ValidationError('Field must be integer')
 
 
+# Валидация формы
 def region_validation(form, field):
     try:
         r = field.data.split(' ')
+
         for i in r:
             int(i)
+
     except ValueError:
+        # Сообщение об ошибке
         raise ValidationError('Field must be like: 1 2 3')
 
 
+# Валидация времени работы
 def working_hours_validation(form, field):
     try:
+        # Проверка формы на правильность формата введённых данных
         time_list = field.data.split(' ')
         for time in time_list:
             datetime.datetime.strptime(time.split('-')[0],
@@ -121,13 +129,18 @@ def working_hours_validation(form, field):
             datetime.datetime.strptime(time.split('-')[1],
                                        '%H:%M')
     except ValueError:
+        # Сообщение об ошибке
         raise ValidationError('Field must be like: HH:MM-HH:MM')
 
 
+# Валидация веса заказа
 def type_is_float(form, field):
     try:
         float(field.data)
+
         if not (0.01 <= float(field.data) <= 50):
             raise ValueError
+
     except ValueError:
+        # Сообщение об ошибке
         raise ValidationError('Field must be float between 0.01 and 50')

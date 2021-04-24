@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, AnyOf
 from data.tools import type_is_integer, type_is_float, region_validation, working_hours_validation
 
 
+# Форма для добавления курьеров
 class PostCouriersForm(FlaskForm):
     id = StringField('id курьера', validators=[DataRequired(), type_is_integer])
     type = StringField('Тип курьера', validators=[DataRequired(), AnyOf(('foot', 'bike', 'car'))])
@@ -14,6 +15,7 @@ class PostCouriersForm(FlaskForm):
     submit = SubmitField('Добавить')
 
 
+# Форма для добавления заказов
 class PostOrdersForm(FlaskForm):
     id = StringField('id заказа', validators=[DataRequired(), type_is_integer])
     weight = StringField('Вес заказа', validators=[DataRequired(), type_is_float])
@@ -23,6 +25,7 @@ class PostOrdersForm(FlaskForm):
     submit = SubmitField('Добавить')
 
 
+# Форма для изменения данных курьера
 class PatchCouriersForm(FlaskForm):
     type = StringField('Тип курьера', validators=[DataRequired(), AnyOf(('foot', 'bike', 'car'))])
     regions = StringField('Регионы работы(вводить через пробел,',
@@ -32,9 +35,11 @@ class PatchCouriersForm(FlaskForm):
     submit = SubmitField('Изменить')
 
 
+# Форма для назначения зказов
 class AssignForm(FlaskForm):
     submit = SubmitField('Назначить заказы')
 
 
+# Форма для выполнения заказов
 class CompleteForm(FlaskForm):
     submit = SubmitField('Завершить заказ')

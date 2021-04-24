@@ -180,6 +180,7 @@ def assign_orders():
             for order in db_sess.query(Orders).filter(Orders.region.in_(courier.regions),
                                                       Orders.weight <= courier.weight(), Orders.is_available):
                 if time_check(order.delivery_hours, courier.working_hours):
+                    # Изменение данных для начисления
                     order.is_available = False
                     order.courier_id = courier.courier_id
                     order.assign_time = assign_time
@@ -208,7 +209,7 @@ def assign_orders():
 @blueprint.route('/orders/complete', methods=['POST'])
 def complete_orders():
     try:
-        complete_time = request.json['complete_time']
+        complete_time = request.json['complete_time']   # Получение время окончания заказа
 
         db_sess = db_session.create_session()   # Создание ссесии с БД
 
@@ -324,8 +325,9 @@ def get_orders(order_id):
         if order is None:
             raise ValueError
 
+        # Проверка занаятости заказа
         if order.is_available:
-
+            # Ответ для свободного заказа
             return make_response('HTTP 200 OK\n' + json.dumps({
                 "order_id": order.order_id,
                 "weight": order.weight,
@@ -335,9 +337,9 @@ def get_orders(order_id):
             }))
 
         else:
-
+            # Проверка выполненности заказа
             if order.courier:
-
+                # Ответ для заказа назначенного на курьера
                 return make_response('HTTP 200 OK\n' + json.dumps({
                     "order_id": order.order_id,
                     "weight": order.weight,
@@ -349,7 +351,7 @@ def get_orders(order_id):
                 }))
 
             else:
-
+                # Ответ для заказа выполненного курьером
                 return make_response('HTTP 200 OK\n' + json.dumps({
                     "order_id": order.order_id,
                     "weight": order.weight,
