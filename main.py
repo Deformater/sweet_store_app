@@ -160,7 +160,7 @@ def couriers(courier_id):
 
 @app.route('/get_orders/<int:order_id>', methods=['GET', 'POST'])
 def orders(order_id):
-    # Получение форм
+    # Получение формы
     complete_form = CompleteForm()
     name = session.get('data')['name']
 
