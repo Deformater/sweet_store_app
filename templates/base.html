@@ -15,6 +15,11 @@
 <header>
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/">Сервис доставки конфет</a>
+        {% if name %}
+            <a class="navbar-brand" href="/profile">{{name}}</a>
+        {% else %}
+            <a class="navbar-brand" href="/login">Sign in</a>
+        {% endif %}
     </nav>
 </header>
 <!-- Begin page content -->

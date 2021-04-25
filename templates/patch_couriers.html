@@ -43,7 +43,7 @@
         {% endif %}
         <p>{{ form.submit(type="submit", class="btn btn-success") }}
             {% if not courier.orders %}
-                {{ assign_form.submit(type="submit", class="btn btn-primary") }}
+                {{ assign_form.assign(type="submit", class="btn btn-primary") }}
             {% endif %}
         </p>
         {{message}}

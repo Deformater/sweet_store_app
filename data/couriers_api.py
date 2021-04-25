@@ -286,7 +286,7 @@ def get_couriers(courier_id):
                 time_by_regions.append(sum1.total_seconds() / len(delivery_time_list))
 
         # Проверка на наличие выполненых курьером заказов
-        if courier.delivery_count:
+        if courier.delivery_count and time_by_regions:
 
             t = min(time_by_regions)    # Минимальное среднее время доставки по районам
             rating = (60 * 60 - min(t, 60 * 60)) / (60 * 60) * 5    # Рейтинг курьера

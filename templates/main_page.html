@@ -2,6 +2,20 @@
 
 {% block content %}
 <h1>Список курьеров:</h1>
+<form action="" method="post" novalidate>
+    {{ form1.hidden_tag() }}
+    <p>
+        {{ form1.sorted_by.label }}<br>
+        {{ form1.sorted_by(class="form-control") }}<br>
+        {% for error in form1.sorted_by.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>{{ form1.submit1(type="submit", class="btn btn-success") }}</p>
+    {{message}}
+</form>
 <table>
     <thead>
         <tr>
@@ -14,16 +28,41 @@
     <tbody>
         {% for courier in data[0] %}
         <tr>
-            <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.courier_id}}</a></td>
-            <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.courier_type}}</a></td>
-            <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.regions}}</a></td>
-            <td><a href="/patch_couriers/{{courier.courier_id}}">{{' '.join(courier.working_hours)}}</a></td>
+            {% if name %}
+                <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.courier_id}}</a></td>
+                <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.courier_type}}</a></td>
+                <td><a href="/patch_couriers/{{courier.courier_id}}">{{courier.regions}}</a></td>
+                <td><a href="/patch_couriers/{{courier.courier_id}}">{{' '.join(courier.working_hours)}}</a></td>
+            {% else %}
+                <td><a href="/login">{{courier.courier_id}}</a></td>
+                <td><a href="/login">{{courier.courier_type}}</a></td>
+                <td><a href="/login">{{courier.regions}}</a></td>
+                <td><a href="/login">{{' '.join(courier.working_hours)}}</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<a href="/post_couriers" class="btn btn-primary">Добавить курьера</a>
+{% if name %}
+    <a href="/post_couriers" class="btn btn-primary">Добавить курьера</a>
+{% else %}
+    <a href="/login" class="btn btn-primary">Добавить курьера</a>
+{% endif %}
 <h1>Список заказов:</h1>
+<form action="" method="post" novalidate>
+    {{ form2.hidden_tag() }}
+    <p>
+        {{ form2.filter_by.label }}<br>
+        {{ form2.filter_by(class="form-control") }}<br>
+        {% for error in form2.filter_by.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    </p>
+    <p>{{ form2.submit2(type="submit", class="btn btn-success") }}</p>
+    {{message}}
+</form>
 <table>
     <thead>
         <tr>
@@ -36,19 +75,24 @@
     <tbody>
         {% for order in data[1] %}
         <tr>
+        {% if name %}
             <td><a href="/get_orders/{{order.order_id}}">{{order.order_id}}</a></td>
             <td><a href="/get_orders/{{order.order_id}}">{{order.weight}}</a></td>
             <td><a href="/get_orders/{{order.order_id}}">{{order.region}}</a></td>
             <td><a href="/get_orders/{{order.order_id}}">{{' '.join(order.delivery_hours)}}</a></td>
+        {% else %}
+            <td><a href="/login">{{order.order_id}}</a></td>
+            <td><a href="/login">{{order.weight}}</a></td>
+            <td><a href="/login">{{order.region}}</a></td>
+            <td><a href="/login">{{' '.join(order.delivery_hours)}}</a></td>
+        {% endif %}
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<a href="/post_orders" class="btn btn-primary">Добавить заказ</a>
-<div id="zatemnenie">
-      <div id="okno">
-          id:{{data[0][0].courier_id}}<br>
-          <a href="#" class="btn btn-primary">Закрыть окно</a>
-      </div>
-</div>
+{% if name %}
+    <a href="/post_orders" class="btn btn-primary">Добавить заказ</a>
+{% else %}
+    <a href="/login" class="btn btn-primary">Добавить заказ</a>
+{% endif %}
 {% endblock %}

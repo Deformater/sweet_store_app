@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Данные пользователя</h1>
+    <p>Имя: {{user.name}}</p>
+    <p>Почта: {{user.email}}</p>
+    {% if user.about %}
+        <p>Личная информация: {{user.about}}</p>
+    {% endif %}
+    <p>Кол-во добавленных курьеров: {{user.couriers_added}}</p>
+    <p>Кол-во добавленных заказов: {{user.orders_added}}</p>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </form>
+    {{message}}
+{% endblock %}
