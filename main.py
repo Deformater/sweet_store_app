@@ -19,7 +19,10 @@ app.config['SECRET_KEY'] = 'yandex_secret_key'
 def post_couriers():
     # Получение формы
     form = PostCouriersForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # Проверка валидации формы
     if form.validate_on_submit():
@@ -64,7 +67,10 @@ def post_couriers():
 def post_orders():
     # Получение формы
     form = PostOrdersForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # Проверка валидации формы
     if form.validate_on_submit():
@@ -111,7 +117,10 @@ def couriers(courier_id):
     # Получение форм
     form = PatchCouriersForm()
     assign_form = AssignForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # GET запрос н получение данных курьера
     response = get('http://localhost:8080/couriers/' + str(courier_id))
@@ -162,7 +171,10 @@ def couriers(courier_id):
 def orders(order_id):
     # Получение формы
     complete_form = CompleteForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # GET запрос н получение данных заказа
     response = get('http://localhost:8080/orders/' + str(order_id))
@@ -198,7 +210,10 @@ def orders(order_id):
 def reqister():
     # Получение форм
     form = RegisterForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # Проверка валидации формы
     if form.validate_on_submit():
@@ -240,7 +255,10 @@ def login():
     # Получение форм
     form = LoginForm()
     reg_form = RegForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     # Проверка валидации формы
     if form.submit.data and form.validate():
@@ -278,7 +296,10 @@ def login():
 def profile():
     # Получение форм
     form = ExitForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
     email = session.get('data')['email']
 
     db_sess = db_session.create_session()   # Создание ссесии с БД
@@ -299,7 +320,10 @@ def main_pages():
     # Получение форм
     form = SortingForm()
     form_filter = FilterForm()
-    name = session.get('data')['name']
+    if session.get('data'):
+        name = session.get('data')['name']
+    else:
+        name = None
 
     db_sess = db_session.create_session()  # Создание ссесии с БД
     data = [db_sess.query(Couriers).all(), db_sess.query(Orders).all()]  # Сортировка и фильтрация поумолчанию
